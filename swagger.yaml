@@ -12,6 +12,7 @@ consumes:
   - application/x-www-form-urlencoded
 produces:
   - application/json
+  
 paths:
   /address:
     x-swagger-router-controller: endpoints
@@ -22,12 +23,53 @@ paths:
       responses:
         "200":
           description: Success
+          schema:
+            $ref: "#/definitions/NewAddressGET"
         default:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
-            
+    
 definitions:
+  NewAddressGET:
+    required:
+      - address
+      - keys
+    properties:
+      address: 
+        $ref: "#/definitions/WalletAddress"
+      keys:
+        $ref: "#/definitions/CryptoKeyPair"
+  CryptoKeyPair:
+    required:
+      - scheme
+      - public
+      - private
+    properties:
+      scheme:
+        $ref: "#/definitions/EncryptionScheme"
+      public: 
+        $ref: "#/definitions/PublicCryptoKey"
+      private: 
+        $ref: "#/definitions/PrivateCryptoKey"
+  EncryptionScheme:
+    type: string
+    description: The code name of an encryption scheme.
+    example: secp256k1
+  PublicCryptoKey:
+    type: string
+    format: hex
+    description: A public cryptographic key in hexadecimal format.
+  PrivateCryptoKey:
+    type: string
+    format: hex
+    description: A private cryptographic key in hexadecimal format.
+  WalletAddress:
+    type: string
+    format: base58
+    description: The hash of a public key in base58check encoding.
+    example: pRsd3kgX4N2yKYnJAYYqUNPSgBEus7gYoL
+    
   ErrorResponse:
     required:
       - message
