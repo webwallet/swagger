@@ -1,0 +1,36 @@
+swagger: "2.0"
+info:
+  version: "0.0.1"
+  title: WebWallet API
+  description: A digital wallet specification for the Web.
+host: localhost
+basePath: /
+schemes:
+  - https
+consumes:
+  - application/json
+  - application/x-www-form-urlencoded
+produces:
+  - application/json
+paths:
+  /address:
+    x-swagger-router-controller: endpoints
+    get:
+      description: Generates and returns a new webwallet address.
+      tags: ["address"]
+      operationId: address.new.get
+      responses:
+        "200":
+          description: Success
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+            
+definitions:
+  ErrorResponse:
+    required:
+      - message
+    properties:
+      message:
+        type: string
