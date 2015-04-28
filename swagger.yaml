@@ -29,7 +29,20 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
-    
+    post:
+      description: Generates and stores a new webwallet address.
+      tags: ["address"]
+      operationId: address.new.post
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/NewAddressPOST"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+            
 definitions:
   NewAddressGET:
     required:
@@ -40,6 +53,16 @@ definitions:
         $ref: "#/definitions/WalletAddress"
       keys:
         $ref: "#/definitions/CryptoKeyPair"
+  NewAddressPOST:
+    required:
+      - address
+      - keys
+    properties:
+      address: 
+        $ref: "#/definitions/WalletAddress"
+      keys:
+        $ref: "#/definitions/CryptoKeyPair"
+        
   CryptoKeyPair:
     required:
       - scheme
