@@ -42,6 +42,27 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
+  /{walletAddress}:
+    x-swagger-router-controller: endpoints
+    parameters:
+      - name: walletAddress
+        in: path
+        description: A webwallet address
+        required: true
+        type: string
+    get:
+      description: Retrieves a representation of an existing webwallet.
+      tags: ["address"]
+      operationId: address.get
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/WalletAddressGET"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse" 
             
 definitions:
   NewAddressGET:
@@ -58,11 +79,20 @@ definitions:
       - address
       - keys
     properties:
-      address: 
+      address:
         $ref: "#/definitions/WalletAddress"
       keys:
         $ref: "#/definitions/CryptoKeyPair"
-        
+  WalletAddressGET:
+    required:
+      - type
+      - address
+    properties:
+      type:
+        type: string
+      address:
+        type: string
+  
   CryptoKeyPair:
     required:
       - scheme
