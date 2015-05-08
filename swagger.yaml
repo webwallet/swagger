@@ -122,7 +122,17 @@ definitions:
     format: base58
     description: The hash of a public key in base58check encoding.
     example: wcvKsFjqCEutppnik5xV9PhvsN4n2FEunE
-    
+  
+# RESTful API response components
+  REST-Rel:
+    type: string
+    description: Describes a relationship between a link and the entity listing it
+    example: self, parent, previous, next
+  REST-Href:
+    type: string
+    description: The URI of a resource
+    example: https://example.com/path/to/a/resource
+  
   ErrorResponse:
     required:
       - message
