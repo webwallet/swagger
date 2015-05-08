@@ -14,23 +14,10 @@ produces:
   - application/json
   
 paths:
-  /:
-    x-swagger-router-controller: endpoints
-    get:
-      description: Returns a set of instructions for getting started with the API.
-      tags: ["basepath"]
-      operationId: basepath.get
-      responses:
-        "200":
-          description: Success
-        default:
-          description: Error
-          schema:
-            $ref: "#/definitions/ErrorResponse" 
   /address:
     x-swagger-router-controller: endpoints
     get:
-      description: Generates and returns a new webwallet address.
+      description: Generates and returns a new wallet address.
       tags: ["address"]
       operationId: wallet.address.new.get
       responses:
@@ -43,7 +30,7 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
     post:
-      description: Generates and stores a new webwallet address.
+      description: Generates and stores a new wallet address.
       tags: ["address"]
       operationId: wallet.address.new.post
       responses:
@@ -64,7 +51,7 @@ paths:
         required: true
         type: string
     get:
-      description: Retrieves a representation of an existing webwallet.
+      description: Retrieves the representation of an existing wallet address.
       tags: ["address"]
       operationId: wallet.address.get
       responses:
@@ -134,7 +121,7 @@ definitions:
     type: string
     format: base58
     description: The hash of a public key in base58check encoding.
-    example: pRsd3kgX4N2yKYnJAYYqUNPSgBEus7gYoL
+    example: wcvKsFjqCEutppnik5xV9PhvsN4n2FEunE
     
   ErrorResponse:
     required:
