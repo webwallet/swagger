@@ -63,7 +63,9 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse" 
-            
+
+###-------------------------------------------###
+###--------------- DEFINITIONS ---------------###           
 definitions:
   NewAddressGET:
     required:
@@ -124,6 +126,7 @@ definitions:
     example: wcvKsFjqCEutppnik5xV9PhvsN4n2FEunE
   
 ##----- REST API RESPONSE COMPONENTS -----#
+      
 # "links" element
   REST-Link:
     type: object
@@ -136,6 +139,13 @@ definitions:
     description: An embedded link or representation of a resource that has properties, actions and other resources associated with it.
     allOf: 
       - $ref: "#/definitions/REST-Rel-Href"
+
+# "actions" property
+  REST-Actions:
+    type: array
+    description: A collection of behaviors exposed by an entity
+    items:
+      $ref: "#/definitions/REST-Action"
 # "actions" element
   REST-Action:
     type: object
@@ -175,6 +185,7 @@ definitions:
     type: string
     description: The URI of a resource.
     example: https://example.com/path/to/a/resource
+    
 # "method" attribute
   REST-Method:
     type: string
