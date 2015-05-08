@@ -124,6 +124,20 @@ definitions:
     example: wcvKsFjqCEutppnik5xV9PhvsN4n2FEunE
   
 # RESTful API response components
+  REST-Rel-Href:
+    type: object
+    required:
+      - rel
+      - href
+    properties:
+      rel:
+        type: array
+        description: A collection of relationships of a link to its entity
+        items:
+          $ref: "#/definitions/REST-Rel"
+      href:
+        $ref: "#/definitions/REST-Href"  
+        
   REST-Rel:
     type: string
     description: Describes a relationship between a link and the entity listing it
