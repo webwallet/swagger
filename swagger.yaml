@@ -124,6 +124,12 @@ definitions:
     example: wcvKsFjqCEutppnik5xV9PhvsN4n2FEunE
   
 # RESTful API response components
+  REST-Link:
+    type: object
+    description: Represents a navigational transition to a related entity
+    allOf:
+      - $ref: "#/definitions/REST-Rel-Href"
+      
   REST-Rel-Href:
     type: object
     required:
