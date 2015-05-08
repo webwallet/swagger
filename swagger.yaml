@@ -158,31 +158,49 @@ definitions:
 ###----- PROPERTIES ATTRIBUTES FOR EACH ENDPOINT -----###  
   Properties-Basepath:
     type: object
+    description: The properties of the basepath document
+    required:
+      - name
+      - version
+      - description
+    properties:
+      name:
+        type: string
+        description: The name of the API.
+      version:
+        $ref: "#/definitions/api-version"
+      description:
+        $ref: "#/definitions/description"
+      tips:
+        type: array
+        description: Tips for getting started with the API.
+        items:
+          type: string
 ###----- REST API RESPONSE COMPONENTS -----###
 
 # "links" attribute      
   REST-Links:
     type: array
-    description: A collection of navigational links
+    description: A collection of navigational links.
     items:
       $ref: "#/definitions/REST-Link"
 # "links" element
   REST-Link:
     type: object
-    description: Represents a navigational transition to a related entity.
+    description: Represents a navigational transition to a related resource.
     required:
       - rel
       - href
     properties:
       rel:
-        $ref: "#/definitions/REST-Rel"
+        $ref: "#/definitions/rel"
       href:
-        $ref: "#/definitions/REST-Href"
+        $ref: "#/definitions/href"
       
 # "entities" attribute
   REST-SubEntities:
     type: array
-    description: A collection of sub-entities
+    description: A collection of sub-entities.
     items:
       $ref: "#/definitions/REST-SubEntity"
 # "entities" element
@@ -194,52 +212,59 @@ definitions:
       - href
     properties:
       rel:
-        $ref: "#/definitions/REST-Rel"
+        $ref: "#/definitions/rel"
       href:
-        $ref: "#/definitions/REST-Href"
+        $ref: "#/definitions/href"
         
 
 # "actions" attribute
   REST-Actions:
     type: array
-    description: A collection of behaviors exposed by an entity
+    description: A collection of behaviors exposed by the resource.
     items:
       $ref: "#/definitions/REST-Action"
 # "actions" element
   REST-Action:
     type: object
-    description: Represents a behaviour exposed by an entity
+    description: Represents a behaviour exposed by the resource.
     required:
       - name
       - href
       - method
     properties:
       name:
-        $ref: "#/definitions/REST-Name"
+        $ref: "#/definitions/name"
       href:
-        $ref: "#/definitions/REST-Href"
+        $ref: "#/definitions/href"
       method:
-        $ref: "#/definitions/REST-Method"
+        $ref: "#/definitions/method"
 
 # "rel" and "href" attributes
-  REST-Rel:
+  rel:
     type: string
-    description: Describes a relationship between a link and the entity listing it.
+    description: Describes the relationship between the link and the entity listing it.
     example: self,parent,previous,next
-  REST-Href:
+  href:
     type: string
-    description: The URI of a resource.
+    description: The URI of the resource, collection or action.
     example: https://example.com/path/to/a/resource
     
 # "method" attribute
-  REST-Method:
+  method:
     type: string
     description: An HTTP method.
     example: GET,POST,PUT,DELETE
 # "name" attribute
-  REST-Name:
+  name:
     type: string
-    description: The name of a resource, collection or action.
+    description: The name of the resource, collection or action.
+# "description" attribute
+  description:
+    type: string
+    description: The description of the resource, collection or action.
+  api-version:
+    type: string
+    description: The version of the queried API.
     
 ###---------- ERROR RESPONSES ----------###
   ErrorResponse:
