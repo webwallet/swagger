@@ -14,6 +14,21 @@ produces:
   - application/json
   
 paths:
+  /:
+    x-swagger-router-controller: endpoints
+    get:
+      description: Returns a set of instructions for getting started with the API.
+      tags: ["basepath"]
+      operationId: basepath.get
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/WelcomeBasepath"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
   /address:
     x-swagger-router-controller: endpoints
     get:
@@ -67,6 +82,21 @@ paths:
 ###-------------------------------------------###
 ###--------------- DEFINITIONS ---------------###           
 definitions:
+  WelcomeBasepath:
+    required:
+      - properties
+      - links
+      - entities
+      - actions
+    properties:
+      properties:
+        $ref: "#/definitions/REST-Properties-Basepath"
+      links:
+        $ref: "#/definitions/REST-Links"
+      entities:
+        $ref: "#/definitions/REST-SubEntities"
+      actions:
+        $ref: "#/definitions/REST-Actions"
   NewAddressGET:
     required:
       - address
@@ -124,8 +154,11 @@ definitions:
     format: base58
     description: The hash of a public key in base58check encoding.
     example: wcvKsFjqCEutppnik5xV9PhvsN4n2FEunE
-  
-##----- REST API RESPONSE COMPONENTS -----#
+
+###----- PROPERTIES ATTRIBUTES FOR EACH ENDPOINT -----###  
+  REST-Properties-Basepath:
+    type: object
+###----- REST API RESPONSE COMPONENTS -----###
 
 # "links" attribute      
   REST-Links:
