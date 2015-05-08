@@ -131,7 +131,15 @@ definitions:
   REST-Entity:
     type: object
     description: A representation of a resource
+    required:
+      - properties
+      - links
+      - entities
+      - actions
     properties:
+      properties:
+        type: object
+        description: The collection of properties of an entity
       links:
         $ref: "#/definitions/REST-Links"
       entities:  
