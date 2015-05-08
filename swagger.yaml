@@ -136,7 +136,22 @@ definitions:
     description: An embedded link or representation of a resource that has properties, actions and other resources associated with it.
     allOf: 
       - $ref: "#/definitions/REST-Rel-Href"
-      
+# "actions" element
+  REST-Action:
+    type: object
+    description: Represents a behaviour exposed by an entity
+    required:
+      - name
+      - href
+      - method
+    properties:
+      name:
+        $ref: "#/definitions/REST-Name"
+      href:
+        $ref: "#/definitions/REST-Href"
+      method:
+        $ref: "#/definitions/REST-Method"
+        
 # "rel" and "href" attributes combined    
   REST-Rel-Href:
     type: object
