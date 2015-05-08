@@ -126,7 +126,13 @@ definitions:
     example: wcvKsFjqCEutppnik5xV9PhvsN4n2FEunE
   
 ##----- REST API RESPONSE COMPONENTS -----#
-      
+
+# "links" attribute      
+  REST-Links:
+    type: array
+    description: A collection of navigational links
+    items:
+      $ref: "#/definitions/REST-Link"
 # "links" element
   REST-Link:
     type: object
@@ -134,7 +140,7 @@ definitions:
     allOf:
       - $ref: "#/definitions/REST-Rel-Href"
       
-# "entities" property
+# "entities" attribute
   REST-SubEntities:
     type: array
     description: A collection of sub-entities
@@ -147,7 +153,7 @@ definitions:
     allOf: 
       - $ref: "#/definitions/REST-Rel-Href"
 
-# "actions" property
+# "actions" attribute
   REST-Actions:
     type: array
     description: A collection of behaviors exposed by an entity
