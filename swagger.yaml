@@ -155,12 +155,21 @@ definitions:
   REST-Rel:
     type: string
     description: Describes a relationship between a link and the entity listing it.
-    example: self, parent, previous, next
+    example: self,parent,previous,next
   REST-Href:
     type: string
     description: The URI of a resource.
     example: https://example.com/path/to/a/resource
-
+# "method" attribute
+  REST-Method:
+    type: string
+    description: An HTTP method.
+    example: GET,POST,PUT,DELETE
+# "name" attribute
+  REST-Name:
+    type: string
+    description: The name of an object.
+    
 # Error responses
   ErrorResponse:
     required:
