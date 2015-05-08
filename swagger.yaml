@@ -137,8 +137,14 @@ definitions:
   REST-Link:
     type: object
     description: Represents a navigational transition to a related entity.
-    allOf:
-      - $ref: "#/definitions/REST-Rel-Href"
+    required:
+      - rel
+      - href
+    properties:
+      rel:
+        $ref: "#/definitions/REST-Rel"
+      href:
+        $ref: "#/definitions/REST-Href"
       
 # "entities" attribute
   REST-SubEntities:
@@ -150,8 +156,15 @@ definitions:
   REST-SubEntity:
     type: object
     description: An embedded link or representation of a resource that has properties, actions and other resources associated with it.
-    allOf: 
-      - $ref: "#/definitions/REST-Rel-Href"
+    required:
+      - rel
+      - href
+    properties:
+      rel:
+        $ref: "#/definitions/REST-Rel"
+      href:
+        $ref: "#/definitions/REST-Href"
+        
 
 # "actions" attribute
   REST-Actions:
@@ -174,21 +187,7 @@ definitions:
         $ref: "#/definitions/REST-Href"
       method:
         $ref: "#/definitions/REST-Method"
-        
-# "rel" and "href" attributes combined    
-  REST-Rel-Href:
-    type: object
-    required:
-      - rel
-      - href
-    properties:
-      rel:
-        type: array
-        description: A collection of relationships of a link to its entity.
-        items:
-          $ref: "#/definitions/REST-Rel"
-      href:
-        $ref: "#/definitions/REST-Href" 
+
 # "rel" and "href" attributes
   REST-Rel:
     type: string
@@ -209,7 +208,7 @@ definitions:
     type: string
     description: The name of a resource.
     
-# Error responses
+###---------- ERROR RESPONSES ----------###
   ErrorResponse:
     required:
       - message
