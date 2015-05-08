@@ -123,13 +123,21 @@ definitions:
     description: The hash of a public key in base58check encoding.
     example: wcvKsFjqCEutppnik5xV9PhvsN4n2FEunE
   
-# RESTful API response components
+##----- REST API RESPONSE COMPONENTS -----#
+# "links" element
   REST-Link:
     type: object
-    description: Represents a navigational transition to a related entity
+    description: Represents a navigational transition to a related entity.
     allOf:
       - $ref: "#/definitions/REST-Rel-Href"
+# "entities" element
+  REST-SubEntity:
+    type: object
+    description: An embedded link or representation of a resource that has properties, actions and other resources associated with it.
+    allOf: 
+      - $ref: "#/definitions/REST-Rel-Href"
       
+# "rel" and "href" attributes combined    
   REST-Rel-Href:
     type: object
     required:
@@ -138,21 +146,22 @@ definitions:
     properties:
       rel:
         type: array
-        description: A collection of relationships of a link to its entity
+        description: A collection of relationships of a link to its entity.
         items:
           $ref: "#/definitions/REST-Rel"
       href:
-        $ref: "#/definitions/REST-Href"  
-        
+        $ref: "#/definitions/REST-Href" 
+# "rel" and "href" attributes
   REST-Rel:
     type: string
-    description: Describes a relationship between a link and the entity listing it
+    description: Describes a relationship between a link and the entity listing it.
     example: self, parent, previous, next
   REST-Href:
     type: string
-    description: The URI of a resource
+    description: The URI of a resource.
     example: https://example.com/path/to/a/resource
-  
+
+# Error responses
   ErrorResponse:
     required:
       - message
