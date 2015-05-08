@@ -90,7 +90,7 @@ definitions:
       - actions
     properties:
       properties:
-        $ref: "#/definitions/REST-Properties-Basepath"
+        $ref: "#/definitions/Properties-Basepath"
       links:
         $ref: "#/definitions/REST-Links"
       entities:
@@ -156,7 +156,7 @@ definitions:
     example: wcvKsFjqCEutppnik5xV9PhvsN4n2FEunE
 
 ###----- PROPERTIES ATTRIBUTES FOR EACH ENDPOINT -----###  
-  REST-Properties-Basepath:
+  Properties-Basepath:
     type: object
 ###----- REST API RESPONSE COMPONENTS -----###
 
@@ -239,7 +239,7 @@ definitions:
 # "name" attribute
   REST-Name:
     type: string
-    description: The name of a resource.
+    description: The name of a resource, collection or action.
     
 ###---------- ERROR RESPONSES ----------###
   ErrorResponse:
