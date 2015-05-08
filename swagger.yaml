@@ -127,26 +127,6 @@ definitions:
   
 ##----- REST API RESPONSE COMPONENTS -----#
 
-# entity
-  REST-Entity:
-    type: object
-    description: A representation of a resource
-    required:
-      - properties
-      - links
-      - entities
-      - actions
-    properties:
-      properties:
-        type: object
-        description: The collection of properties of an entity
-      links:
-        $ref: "#/definitions/REST-Links"
-      entities:  
-        $ref: "#/definitions/REST-SubEntities"
-      actions:
-        $ref: "#/definitions/REST-Actions"
-      
 # "links" attribute      
   REST-Links:
     type: array
@@ -227,7 +207,7 @@ definitions:
 # "name" attribute
   REST-Name:
     type: string
-    description: The name of an object.
+    description: The name of a resource.
     
 # Error responses
   ErrorResponse:
