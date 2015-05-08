@@ -133,6 +133,13 @@ definitions:
     description: Represents a navigational transition to a related entity.
     allOf:
       - $ref: "#/definitions/REST-Rel-Href"
+      
+# "entities" property
+  REST-SubEntities:
+    type: array
+    description: A collection of sub-entities
+    items:
+      $ref: "#/definitions/REST-SubEntity"
 # "entities" element
   REST-SubEntity:
     type: object
