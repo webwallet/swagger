@@ -211,6 +211,11 @@ definitions:
 
 ###----- ENTITIES ATTRIBUTES FOR EACH ENDPOINT -----###         
   Entities-NewAddressGET:
+    type: array
+    description: A collection of sub-entities of a wallet address.
+    items:
+      $ref: "#/definitions/Entity-NewAddressGET"
+  Entity-NewAddressGET:
     type: object
     description: Sub-entities of a wallet address.
     required:
@@ -219,6 +224,11 @@ definitions:
       keys:
         $ref: "#/definitions/CryptoKeyPair"
   Entities-NewAddressPOST:
+    type: array
+    description: A collection of sub-entities of a wallet address.
+    items:
+      $ref: "#/definitions/Entity-NewAddressPOST"
+  Entity-NewAddressPOST:
     type: object
     description: Sub-entities of a wallet address.
     required:
