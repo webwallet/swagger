@@ -238,6 +238,8 @@ definitions:
         $ref: "#/definitions/href"
       method:
         $ref: "#/definitions/method"
+      fields:
+        $ref: "#/definitions/fields"
 
 # "rel" and "href" attributes
   rel:
@@ -262,9 +264,30 @@ definitions:
   description:
     type: string
     description: The description of the resource, collection or action.
+# "api-version" attribute
   api-version:
     type: string
     description: The version of the queried API.
+# "fields" attribute
+  fields:
+    type: array
+    description: A collection of request fields.
+    items:
+      $ref: "#/definitions/field"
+  field:
+    type: object
+    description: A request field.
+    required:
+      - name
+    properties:
+      name:
+        type: string
+        description: The name of the field.
+      type:
+        type: string
+        description: The data type of the field.
+      value:
+        description: The default value of the field.
     
 ###---------- ERROR RESPONSES ----------###
   ErrorResponse:
