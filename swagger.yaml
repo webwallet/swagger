@@ -1,6 +1,6 @@
 swagger: "2.0"
 info:
-  version: "0.0.1"
+  version: "0"
   title: WebWallet API
   description: A digital wallet specification for the Web.
 host: localhost
@@ -85,43 +85,49 @@ definitions:
   WelcomeBasepath:
     required:
       - properties
-      - links
       - entities
       - actions
+      - links
     properties:
       properties:
         $ref: "#/definitions/Properties-Basepath"
-      links:
-        $ref: "#/definitions/REST-Links"
       entities:
         $ref: "#/definitions/REST-SubEntities"
       actions:
         $ref: "#/definitions/REST-Actions"
+      links:
+        $ref: "#/definitions/REST-Links"
 # GET /address
   NewAddressGET:
     required:
       - properties
-      - links
       - entities
       - actions
+      - links
     properties:
       properties:
         $ref: "#/definitions/Properties-NewAddressGET"
-      links:
-        $ref: "#/definitions/REST-Links"
       entities:
-        $ref: "#/definitions/REST-SubEntities"
+        $ref: "#/definitions/Entities-NewAddressGET"
       actions:
         $ref: "#/definitions/REST-Actions"
+      links:
+        $ref: "#/definitions/REST-Links"
   NewAddressPOST:
     required:
-      - address
-      - keys
+      - properties
+      - entities
+      - actions
+      - links
     properties:
-      address:
-        $ref: "#/definitions/WalletAddress"
-      keys:
-        $ref: "#/definitions/CryptoKeyPair"
+      properties:
+        $ref: "#/definitions/Properties-NewAddressPOST"
+      entities:
+        $ref: "#/definitions/Entities-NewAddressPOST"
+      actions:
+        $ref: "#/definitions/REST-Actions"
+      links:
+        $ref: "#/definitions/REST-Links"
   WalletAddressGET:
     required:
       - type
@@ -136,7 +142,6 @@ definitions:
     required:
       - scheme
       - public
-      - private
     properties:
       scheme:
         $ref: "#/definitions/EncryptionScheme"
@@ -156,11 +161,7 @@ definitions:
     type: string
     format: hex
     description: A private cryptographic key in hexadecimal format.
-  WalletAddress:
-    type: string
-    format: base58
-    description: The hash of a public key in base58check encoding.
-    example: wcvKsFjqCEutppnik5xV9PhvsN4n2FEunE
+  
 
 ###----- PROPERTIES ATTRIBUTES FOR EACH ENDPOINT -----###  
   Properties-Basepath:
@@ -185,17 +186,47 @@ definitions:
           type: string
   Properties-NewAddressGET:
     type: object
-    description: The properties of the new address.
+    description: The properties of the new wallet address.
     required:
       - address
       - type
     properties:
       address:
-        type: string
-        description: The address.
+        $ref: "#/definitions/WalletAddress"
       type:
         type: string
         description: The type of address.
+  Properties-NewAddressPOST:
+    type: object
+    description: The properties of the new wallet address.
+    required:
+      - address
+      - type
+    properties:
+      address:
+        $ref: "#/definitions/WalletAddress"
+      type:
+        type: string
+        description: The type of address.
+
+###----- ENTITIES ATTRIBUTES FOR EACH ENDPOINT -----###         
+  Entities-NewAddressGET:
+    type: object
+    description: Sub-entities of a wallet address.
+    required:
+      - keys
+    properties:
+      keys:
+        $ref: "#/definitions/CryptoKeyPair"
+  Entities-NewAddressPOST:
+    type: object
+    description: Sub-entities of a wallet address.
+    required:
+      - keys
+    properties:
+      keys:
+        $ref: "#/definitions/CryptoKeyPair"
+    
 ###----- REST API RESPONSE COMPONENTS -----###
 
 # "links" attribute      
@@ -236,7 +267,6 @@ definitions:
       href:
         $ref: "#/definitions/href"
         
-
 # "actions" attribute
   REST-Actions:
     type: array
@@ -308,6 +338,12 @@ definitions:
         description: The data type of the field.
       value:
         description: The default value of the field.
+# "address" attribute
+  WalletAddress:
+    type: string
+    format: base58
+    description: The hash of a public key in base58check encoding.
+    example: wcvKsFjqCEutppnik5xV9PhvsN4n2FEunE
     
 ###---------- ERROR RESPONSES ----------###
   ErrorResponse:
