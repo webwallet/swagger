@@ -97,15 +97,22 @@ definitions:
         $ref: "#/definitions/REST-SubEntities"
       actions:
         $ref: "#/definitions/REST-Actions"
+# GET /address
   NewAddressGET:
     required:
-      - address
-      - keys
+      - properties
+      - links
+      - entities
+      - actions
     properties:
-      address: 
-        $ref: "#/definitions/WalletAddress"
-      keys:
-        $ref: "#/definitions/CryptoKeyPair"
+      properties:
+        $ref: "#/definitions/Properties-NewAddressGET"
+      links:
+        $ref: "#/definitions/REST-Links"
+      entities:
+        $ref: "#/definitions/REST-SubEntities"
+      actions:
+        $ref: "#/definitions/REST-Actions"
   NewAddressPOST:
     required:
       - address
@@ -176,6 +183,19 @@ definitions:
         description: Tips for getting started with the API.
         items:
           type: string
+  Properties-NewAddressGET:
+    type: object
+    description: The properties of the new address.
+    required:
+      - address
+      - type
+    properties:
+      address:
+        type: string
+        description: The address.
+      type:
+        type: string
+        description: The type of address.
 ###----- REST API RESPONSE COMPONENTS -----###
 
 # "links" attribute      
