@@ -77,6 +77,27 @@ paths:
         default:
           description: Error
           schema:
+            $ref: "#/definitions/ErrorResponse"
+  /address/{walletAddress}/balance:
+    x-swagger-router-controller: endpoints
+    parameters:
+      - name: walletAddress
+        in: path
+        description: A webwallet address
+        required: true
+        type: string
+    get:
+      description: Retrieves the balance of a wallet address.
+      tags: ["balance"]
+      operationId: wallet.address.balance.get
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/WalletAddressBalanceGET"
+        default:
+          description: Error
+          schema:
             $ref: "#/definitions/ErrorResponse" 
 
 ###-------------------------------------------###
@@ -137,6 +158,21 @@ definitions:
         type: string
       address:
         type: string
+  WalletAddressBalanceGET:
+    required:
+      - properties
+      - entities
+      - actions
+      - links
+    properties:
+      properties:
+        $ref: "#/definitions/Properties-WalletAddressBalanceGET"
+      entities:
+        $ref: "#/definitions/Entities-NewAddressPOST"
+      actions:
+        $ref: "#/definitions/REST-Actions"
+      links:
+        $ref: "#/definitions/REST-Links"
   
   CryptoKeyPair:
     required:
@@ -208,6 +244,20 @@ definitions:
       type:
         type: string
         description: The type of address.
+  Properties-WalletAddressBalanceGET:
+    type: object
+    description: The balance of a wallet address.
+    required:
+      - address
+      - balance
+      - currency
+    properties:
+      address:
+        $ref: "#/definitions/WalletAddress"
+      balance:
+        type: number
+      currency:
+        $ref: "#/definitions/Currency"
 
 ###----- ENTITIES ATTRIBUTES FOR EACH ENDPOINT -----###         
   Entities-NewAddressGET:
@@ -354,6 +404,10 @@ definitions:
     format: base58
     description: The hash of a public key in base58check encoding.
     example: wcvKsFjqCEutppnik5xV9PhvsN4n2FEunE
+  Currency:
+    type: string
+    description: A currency code optionally followed by a circle identifier (separeted by a colon)
+    example: IOU[:ABCDEFG]
     
 ###---------- ERROR RESPONSES ----------###
   ErrorResponse:
