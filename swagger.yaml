@@ -45,6 +45,16 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
     post:
+      parameters:
+      - name: currency
+        in: formData
+        type: string
+      - name: lowerLimit
+        in: formData
+        type: number
+      - name: upperLimit
+        in: formData
+        type: number
       description: Generates and stores a new wallet address.
       tags: ["address"]
       operationId: wallet.address.new.post
@@ -198,7 +208,12 @@ definitions:
     format: hex
     description: A private cryptographic key in hexadecimal format.
   
-
+###----- BODY SCHEMAS -----###
+  NewAddressPOST-Body:
+    type: object
+    properties:
+      currency:
+        type: string
 ###----- PROPERTIES ATTRIBUTES FOR EACH ENDPOINT -----###  
   Properties-Basepath:
     type: object
