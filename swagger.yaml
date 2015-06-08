@@ -118,7 +118,7 @@ paths:
     parameters:
       - name: walletAddress
         in: path
-        description: A webwallet address
+        description: A webwallet address.
         required: true
         type: string
       - name: source
@@ -148,7 +148,59 @@ paths:
         default:
           description: Error
           schema:
-            $ref: "#/definitions/ErrorResponse" 
+            $ref: "#/definitions/ErrorResponse"
+  /oauth/token:
+    x-swagger-router-controller: endpoints
+    parameters:
+      - name: client_ID
+        in: formData
+        description: The ID of an API client.
+        required: true
+        type: string
+      - name: client_secret
+        in: formData
+        description: The secret of an API client.
+        required: true
+        type: string
+      - name: grant_type
+        in: formData
+        description: The type of OAuth flow.
+        required: true
+        type: string
+      - name: code
+        in: formData
+        description: The code that will be exchanged for an access token (authorization_code flow only).
+        type: string
+      - name: redirect_uri
+        in: formData
+        description: The URI to which the user agent should be redirected after the user grants or rejects authorization (authorization_code flow only).
+        type: string
+      - name: refresh_token
+        in: formData
+        description: An OAuth refresh token (refresh_token flow only).
+        type: string
+      - name: username
+        in: formData
+        description: The username of a first-party app (password flow only).
+        type: string
+      - name: password
+        in: formData
+        description: The password of a first-party app (password flow only).
+        type: string
+    post:
+      description: Handles access token generation.
+      tags: ["oauth"]
+      operationId: oauth.flows
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/OAuthTokenPOST"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    
 
 ###-------------------------------------------###
 ###--------------- DEFINITIONS ---------------###           
