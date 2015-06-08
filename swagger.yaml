@@ -29,6 +29,7 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
+            
   /address:
     x-swagger-router-controller: endpoints
     get:
@@ -67,6 +68,7 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
+            
   /address/{walletAddress}:
     x-swagger-router-controller: endpoints
     parameters:
@@ -88,6 +90,7 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
+            
   /address/{walletAddress}/balance:
     x-swagger-router-controller: endpoints
     parameters:
@@ -105,6 +108,43 @@ paths:
           description: Success
           schema:
             $ref: "#/definitions/WalletAddressBalanceGET"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+    
+  /address/{walletAddress}/transactions:
+    x-swagger-router-controller: endpoints
+    parameters:
+      - name: walletAddress
+        in: path
+        description: A webwallet address
+        required: true
+        type: string
+      - name: source
+        in: formData
+        description: The wallet address sending the transaction request.
+        required: true
+        type: string
+      - name: amount
+        in: formData
+        description: The amount of the transaction.
+        required: true
+        type: number
+      - name: currency
+        in: formData
+        description: The currency of the transaction.
+        required: true
+        type: string
+    post:
+      description: Sends a transaction request to a wallet address.
+      tags: ["transactions"]
+      operationId: wallet.address.transactions.post
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/WalletAddressTransactionPOST"
         default:
           description: Error
           schema:
@@ -177,6 +217,21 @@ definitions:
     properties:
       properties:
         $ref: "#/definitions/Properties-WalletAddressBalanceGET"
+      entities:
+        $ref: "#/definitions/Entities-NewAddressPOST"
+      actions:
+        $ref: "#/definitions/REST-Actions"
+      links:
+        $ref: "#/definitions/REST-Links"
+  WalletAddressTransactionPOST:
+    required:
+      - properties
+      - entities
+      - actions
+      - links
+    properties:
+      properties:
+        $ref: "#/definitions/Properties-WalletAddressTransactionPOST"
       entities:
         $ref: "#/definitions/Entities-NewAddressPOST"
       actions:
@@ -273,6 +328,18 @@ definitions:
         type: number
       currency:
         $ref: "#/definitions/Currency"
+  Properties-WalletAddressTransactionPOST:
+    type: object
+    description: The reply to a transaction request.
+    required:
+      - success
+      - transaction
+    properties:
+      success:
+        type: boolean
+      transaction:
+        type: string
+    
 
 ###----- ENTITIES ATTRIBUTES FOR EACH ENDPOINT -----###         
   Entities-NewAddressGET:
