@@ -149,6 +149,43 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
+  
+  /oauth/authorize:
+    x-swagger-router-controller: endpoints
+    parameters:
+      - name: client_ID
+        in: formData
+        description: The ID of an API client.
+        required: true
+        type: string
+      - name: redirect_uri
+        in: formData
+        description: The URI to which the user agent should be redirected after the user grants or rejects authorization.
+        required: true
+        type: string
+      - name: response_type
+        in: formData
+        description: Specifies if a code or a token should be returned.
+        required: true
+        type: string
+      - name: scope
+        in: formData
+        description: The scope of the requested authorization.
+        type: string
+    get:
+      description: Handles the authorization of thirty-party applications.
+      tags: ["oauth"]
+      operationId: oauth.flows
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/OAuthAuthorizeGET"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  
   /oauth/token:
     x-swagger-router-controller: endpoints
     parameters:
