@@ -154,28 +154,28 @@ paths:
     x-swagger-router-controller: endpoints
     parameters:
       - name: client_ID
-        in: formData
+        in: query
         description: The ID of an API client.
         required: true
         type: string
       - name: redirect_uri
-        in: formData
+        in: query
         description: The URI to which the user agent should be redirected after the user grants or rejects authorization.
         required: true
         type: string
       - name: response_type
-        in: formData
+        in: query
         description: Specifies if a code or a token should be returned.
         required: true
         type: string
       - name: scope
-        in: formData
+        in: query
         description: The scope of the requested authorization.
         type: string
     get:
       description: Handles the authorization of thirty-party applications.
       tags: ["oauth"]
-      operationId: oauth.flows
+      operationId: oauth.authorize.get
       responses:
         "200":
           description: Success
@@ -227,7 +227,7 @@ paths:
     post:
       description: Handles access token generation.
       tags: ["oauth"]
-      operationId: oauth.flows
+      operationId: oauth.token.post
       responses:
         "200":
           description: Success
@@ -328,6 +328,24 @@ definitions:
       links:
         $ref: "#/definitions/REST-Links"
   
+  OAuthAuthorizeGET:
+    description: An HTTP document that prompts the user to authorize a third-party application and redirects the user agent to the supplied URI with the authorization response.
+  
+  OAuthTokenPOST:
+    required:
+      - access_token
+      - expires_in
+      - refresh_token
+    properties:
+      access_token:
+        $ref: "#/definitions/OAuthAccessToken"
+      expires_in:
+        $ref: "#/definitions/OAuthExpiresIn"
+      refresh_token:
+        $ref: "#/definitions/OAuthRefreshToken"
+      token_type:
+        $ref: "#/definitions/OAuthTokenType"
+  
   CryptoKeyPair:
     required:
       - scheme
@@ -353,12 +371,12 @@ definitions:
     description: A private cryptographic key in hexadecimal format.
   
 ###----- BODY SCHEMAS -----###
-  NewAddressPOST-Body:
-    type: object
-    properties:
-      currency:
-        type: string
-###----- PROPERTIES ATTRIBUTES FOR EACH ENDPOINT -----###  
+#  NewAddressPOST-Body:
+#    type: object
+#    properties:
+#      currency:
+#        type: string
+###----- CONTENTS OF 'PROPERTIES' FOR EACH ENDPOINT -----###  
   Properties-Basepath:
     type: object
     description: The properties of the basepath document
@@ -579,6 +597,24 @@ definitions:
     type: string
     description: A currency code optionally followed by a circle identifier (separeted by a colon)
     example: IOU[:ABCDEFG]
+  
+  OAuthAccessToken:
+    type: string
+    format: Base64-url-encoded JWT (JSON Web Token)
+    description: A token used to access an OAuth-secured API.
+  OAuthExpiresIn:
+    type: number
+    format: seconds
+    description: The number of seconds a token will be valid for.
+    example: 3600
+  OAuthRefreshToken:
+    type: string
+    format: Base64-url-encoded JWT (JSON Web Token)
+    description: A token used to obtain a new access token after it expires.
+  OAuthTokenType:
+    type: string
+    description: The type of an OAuth token.
+    example: bearer
     
 ###---------- ERROR RESPONSES ----------###
   ErrorResponse:
