@@ -15,6 +15,10 @@ produces:
 paths:
   /:
     x-swagger-router-controller: endpoints
+    parameters:
+      - name: accept-language
+        in: header
+        type: string
     get:
       description: Returns a set of instructions for getting started with the API.
       tags: ["basepath"]
@@ -36,6 +40,9 @@ paths:
         in: header
         type: string
         required: true
+      - name: accept-language
+        in: header
+        type: string
     get:
       description: Generates and returns a new wallet address.
       tags: ["address"]
@@ -51,19 +58,12 @@ paths:
             $ref: "#/definitions/ErrorResponse"
     post:
       parameters:
-      - name: currency
-        in: formData
-        type: string
-      - name: lowerLimit
-        in: formData
-        type: number
-      - name: upperLimit
-        in: formData
-        type: number
-      - name: authorization
-        in: header
-        type: string
-        required: true
+        - name: addressDetails
+          in: body
+          description: A transaction request document.
+          required: true
+          schema:
+            $ref: "#/definitions/NewWalletAddressRequest"
       description: Generates and stores a new wallet address.
       tags: ["address"]
       operationId: wallet.address.new.post
@@ -89,6 +89,9 @@ paths:
         in: header
         type: string
         required: true
+      - name: accept-language
+        in: header
+        type: string
     get:
       description: Retrieves the representation of an existing wallet address.
       tags: ["address"]
@@ -115,6 +118,9 @@ paths:
         in: header
         type: string
         required: true
+      - name: accept-language
+        in: header
+        type: string
     get:
       description: Retrieves the balance of a wallet address.
       tags: ["balance"]
@@ -141,6 +147,9 @@ paths:
         in: header
         type: string
         required: true
+      - name: accept-language
+        in: header
+        type: string
     post:
       parameters:
         - name: transaction
@@ -319,7 +328,24 @@ definitions:
     # format: UTC
     description: The creation or scheduled time of the transaction request document.
     example: "Sat, 14 Mar 2015 09:26:53 GMT"
+
+  NewWalletAddressRequest:
+    type: object
+    description: Optional properties for wallet address generation.
+    properties:
+      currency:
+        $ref: "#/definitions/Currency"
+      limits:
+        $ref: "#/definitions/WalletAddressLimits"
   
+  WalletAddressLimits:
+    type: object
+    description: The balance limits of a wallet address.
+    properties:
+      lower:
+        type: number
+      upper:
+        type: number
     
   WelcomeBasepath:
     required:
