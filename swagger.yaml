@@ -31,6 +31,11 @@ paths:
             
   /address:
     x-swagger-router-controller: endpoints
+    parameters:
+      - name: authorization
+        in: header
+        type: string
+        required: true
     get:
       description: Generates and returns a new wallet address.
       tags: ["address"]
@@ -132,6 +137,10 @@ paths:
         description: A webwallet address.
         required: true
         type: string
+      - name: authorization
+        in: header
+        type: string
+        required: true
     post:
       parameters:
         - name: transaction
@@ -392,7 +401,7 @@ definitions:
       properties:
         $ref: "#/definitions/Properties-WalletAddressTransactionPOST"
       entities:
-        $ref: "#/definitions/Entities-NewAddressPOST"
+        $ref: "#/definitions/Entities-WalletAddressTransactionPOST"
       actions:
         $ref: "#/definitions/REST-Actions"
       links:
@@ -545,6 +554,12 @@ definitions:
     properties:
       keys:
         $ref: "#/definitions/CryptoKeyPair"
+        
+  Entities-WalletAddressTransactionPOST:
+    type: array
+    description: A collection of sub-entities of a transaction.
+    items:
+      type: object
     
 ###----- REST API RESPONSE COMPONENTS -----###
 
