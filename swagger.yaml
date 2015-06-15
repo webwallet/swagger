@@ -9,7 +9,6 @@ schemes:
   - https
 consumes:
   - application/json
-  - application/x-www-form-urlencoded
 produces:
   - application/json
   
@@ -56,6 +55,10 @@ paths:
       - name: upperLimit
         in: formData
         type: number
+      - name: authorization
+        in: header
+        type: string
+        required: true
       description: Generates and stores a new wallet address.
       tags: ["address"]
       operationId: wallet.address.new.post
@@ -77,6 +80,10 @@ paths:
         description: A webwallet address
         required: true
         type: string
+      - name: authorization
+        in: header
+        type: string
+        required: true
     get:
       description: Retrieves the representation of an existing wallet address.
       tags: ["address"]
@@ -99,6 +106,10 @@ paths:
         description: A webwallet address
         required: true
         type: string
+      - name: authorization
+        in: header
+        type: string
+        required: true
     get:
       description: Retrieves the balance of a wallet address.
       tags: ["balance"]
@@ -112,7 +123,7 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
-    
+  
   /address/{walletAddress}/transactions:
     x-swagger-router-controller: endpoints
     parameters:
@@ -121,22 +132,14 @@ paths:
         description: A webwallet address.
         required: true
         type: string
-      - name: source
-        in: formData
-        description: The wallet address sending the transaction request.
-        required: true
-        type: string
-      - name: amount
-        in: formData
-        description: The amount of the transaction.
-        required: true
-        type: number
-      - name: currency
-        in: formData
-        description: The currency of the transaction.
-        required: true
-        type: string
     post:
+      parameters:
+        - name: transaction
+          in: body
+          description: A transaction request document.
+          required: true
+          schema:
+            $ref: "#/definitions/TransactionRequest"
       description: Sends a transaction request to a wallet address.
       tags: ["transactions"]
       operationId: wallet.address.transactions.post
@@ -242,6 +245,73 @@ paths:
 ###-------------------------------------------###
 ###--------------- DEFINITIONS ---------------###           
 definitions:
+  TransactionRequest:
+    type: object
+    # format: JWS
+    required:
+      - header
+      - payload
+      - signature
+    properties:
+      header:
+        $ref: "#/definitions/TransactionRequest-Header"
+      payload:
+        $ref: "#/definitions/TransactionRequest-Payload"
+      signature:
+        $ref: "#/definitions/TransactionRequest-Signature"
+  TransactionRequest-Header:
+    type: object
+    properties:
+      alg:
+        type: string
+        example: ed25519
+  TransactionRequest-Payload:
+    type: object
+    required:
+      - source
+      - destination
+      - amount
+      - currency
+      - timestamp
+    properties:
+      source:
+        $ref: "#/definitions/TransactionRequest-Source"
+      destination: 
+        $ref: "#/definitions/TransactionRequest-Destination"
+      amount:
+        $ref: "#/definitions/TransactionRequest-Amount"
+      currency:
+        $ref: "#/definitions/TransactionRequest-Currency"
+      timestamp:
+        $ref: "#/definitions/TransactionRequest-Timestamp"
+  TransactionRequest-Signature:
+    type: string
+  TransactionRequest-Source:
+    type: string
+    # format: base58check
+    description: A source wallet address.
+    example: wi1iWJdeXJQQcfi6xB6iewpkgkWJWw2SYw
+  TransactionRequest-Destination:
+    type: string
+    # format: base58check
+    description: A destination wallet address.
+    example: wQfghayiSxCWfetuZ6ZfBEuxLEDUfnMzQc
+  TransactionRequest-Amount:
+    type: number
+    description: The amount of the transaction.
+    example: 100
+  TransactionRequest-Currency:
+    type: string
+    # format: currencyCode:identifier
+    description: The currency of the transaction.
+    example: IOU:ABC123
+  TransactionRequest-Timestamp:
+    type: string
+    # format: UTC
+    description: The creation or scheduled time of the transaction request document.
+    example: "Sat, 14 Mar 2015 09:26:53 GMT"
+  
+    
   WelcomeBasepath:
     required:
       - properties
