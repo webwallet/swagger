@@ -19,6 +19,7 @@ paths:
       - name: accept-language
         in: header
         type: string
+        description: Preferred response languages.
     get:
       description: Returns a set of instructions for getting started with the API.
       tags: ["basepath"]
@@ -39,10 +40,12 @@ paths:
       - name: authorization
         in: header
         type: string
+        description: OAuth bearer token.
         required: true
       - name: accept-language
         in: header
         type: string
+        description: Preferred response languages.
     get:
       description: Generates and returns a new wallet address.
       tags: ["address"]
@@ -88,10 +91,12 @@ paths:
       - name: authorization
         in: header
         type: string
+        description: OAuth bearer token.
         required: true
       - name: accept-language
         in: header
         type: string
+        description: Preferred response languages.
     get:
       description: Retrieves the representation of an existing wallet address.
       tags: ["address"]
@@ -117,10 +122,12 @@ paths:
       - name: authorization
         in: header
         type: string
+        description: OAuth bearer token.
         required: true
       - name: accept-language
         in: header
         type: string
+        description: Preferred response languages.
     get:
       description: Retrieves the balance of a wallet address.
       tags: ["balance"]
@@ -146,10 +153,12 @@ paths:
       - name: authorization
         in: header
         type: string
+        description: OAuth bearer token.
         required: true
       - name: accept-language
         in: header
         type: string
+        description: Preferred response languages.
     post:
       parameters:
         - name: transaction
@@ -325,9 +334,9 @@ definitions:
     example: IOU:ABC123
   TransactionRequest-Timestamp:
     type: string
-    # format: UTC
+    # format: ISO 8601
     description: The creation or scheduled time of the transaction request document.
-    example: "Sat, 14 Mar 2015 09:26:53 GMT"
+    example: "2015-03-14T09:26:53.000Z"
 
   NewWalletAddressRequest:
     type: object
