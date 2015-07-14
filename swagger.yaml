@@ -34,6 +34,28 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
             
+  /currency:
+    x-swagger-router-controller: endpoints
+    parameters:
+      - name: authorization
+        in: header
+        type: string
+        description: OAuth bearer token.
+        required: true  
+    post:
+      description: Creates a new currency.
+      tags: ["currency"]
+      operationId: currency.new.post
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/NewAddressGET"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+            
   /address:
     x-swagger-router-controller: endpoints
     parameters:
